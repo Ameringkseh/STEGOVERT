@@ -1,9 +1,27 @@
-# Dependencies
-.psci_modules
-.spago
-bower_components
-node_modules
+# Python Virtual Environment
+Steganography/Include/
+Steganography/Lib/
+Steganography/Scripts/
+Steganography/site-packages/
+Steganography/pyvenv.cfg
 
-# Generated files
-.psci
-output
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

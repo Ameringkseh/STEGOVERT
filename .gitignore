@@ -1,9 +1,6 @@
 # Python Virtual Environment
-Steganography/Include/
-Steganography/Lib/
-Steganography/Scripts/
-Steganography/site-packages/
-Steganography/pyvenv.cfg
+venv/
+Steganography/
 
 # Python
 __pycache__/

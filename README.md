@@ -20,29 +20,29 @@ cd STEGOVERT
 
 **Windows:**
 ```bash
-python -m venv Steganography
+python -m venv venv
 ```
 
 **Linux/macOS:**
 ```bash
-python3 -m venv Steganography
+python3 -m venv venv
 ```
 
 ### 3. Aktifkan Virtual Environment
 
 **Windows (Command Prompt):**
 ```bash
-Steganography\Scripts\activate
+venv\Scripts\activate
 ```
 
 **Windows (PowerShell):**
 ```bash
-.\Steganography\Scripts\Activate.ps1
+.\venv\Scripts\Activate.ps1
 ```
 
 **Linux/macOS:**
 ```bash
-source Steganography/bin/activate
+source venv/bin/activate
 ```
 
 > ⚠️ **Catatan:** Jika menggunakan PowerShell dan mendapat error tentang execution policy, jalankan perintah berikut terlebih dahulu:
@@ -62,13 +62,11 @@ Setelah semua dependencies terinstall, jalankan aplikasi dengan perintah:
 
 **Windows:**
 ```bash
-cd Steganography
 python pystegano_gui.py
 ```
 
 **Linux/macOS:**
 ```bash
-cd Steganography
 python3 pystegano_gui.py
 ```
 

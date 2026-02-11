@@ -51,9 +51,9 @@ def embed_message(image_path, secret_message):
     try:
         # Menggunakan algoritma LSB (Least Significant Bit)
         secret_image = lsb.hide(image_path, secret_message)
-        output_name = "secret_packet.png"
+        output_name = os.path.join(os.path.dirname(os.path.abspath(__file__)), "secret_packet.png")
         secret_image.save(output_name)
-        print(Fore.GREEN + "[Sukses] Pesan tersimpan di 'secret_packet.png'")
+        print(Fore.GREEN + f"[Sukses] Pesan tersimpan di '{output_name}'")
         return output_name
     except Exception as e:
         print(Fore.RED + f"[Gagal] Error saat encoding: {e}")
@@ -144,12 +144,15 @@ def start_receiver():
     received = client_socket.recv(BUFFER_SIZE).decode()
     filename, filesize = received.split(SEPARATOR)
     filename = "diterima_" + os.path.basename(filename) # Rename agar tidak menimpa
+    received_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "received")
+    os.makedirs(received_dir, exist_ok=True)
+    filepath = os.path.join(received_dir, filename)
     filesize = int(filesize)
 
     # 4. Menerima Binary Data
     print(f"{Fore.YELLOW}[Transfer] Menerima file: {filename} ({filesize} bytes)...")
     
-    with open(filename, "wb") as f:
+    with open(filepath, "wb") as f:
         bytes_received = 0
         while bytes_received < filesize:
             bytes_read = client_socket.recv(BUFFER_SIZE)
@@ -158,14 +161,14 @@ def start_receiver():
             f.write(bytes_read)
             bytes_received += len(bytes_read)
 
-    print(Fore.GREEN + f"[Sukses] File tersimpan: {filename}")
+    print(Fore.GREEN + f"[Sukses] File tersimpan: {filepath}")
     client_socket.close()
     s.close()
 
     # 5. Decode Pesan Rahasia
     choice = input(Fore.WHITE + "\nApakah Anda ingin membuka pesan rahasia sekarang? (y/n): ")
     if choice.lower() == 'y':
-        rahasia = extract_message(filename)
+        rahasia = extract_message(filepath)
         print(Fore.CYAN + "=" * 40)
         print(Fore.RED + "PESAN RAHASIA TERDETEKSI:")
         print(Fore.WHITE + Style.BRIGHT + rahasia)

@@ -14,7 +14,11 @@ import time
 import math
 import base64
 import hashlib
-import winsound
+try:
+    import winsound
+    HAS_WINSOUND = True
+except ImportError:
+    HAS_WINSOUND = False
 import io
 
 # Optional imports
@@ -118,6 +122,8 @@ def decrypt_message(encrypted_msg, password):
 
 def play_sound(sound_type):
     """Play system sound effects"""
+    if not HAS_WINSOUND:
+        return
     try:
         if sound_type == "success":
             winsound.PlaySound("SystemAsterisk", winsound.SND_ALIAS | winsound.SND_ASYNC)
@@ -409,7 +415,7 @@ class StegovertApp(ctk.CTk, TkinterDnD.DnDWrapper if HAS_DND else object):
         
         self.about_tab_btn = ctk.CTkButton(
             tab_buttons_frame,
-            text="ℹ️ INTEL",
+            text="ℹ️ ABOUT",
             command=lambda: self._switch_tab("about"),
             font=ctk.CTkFont(family="Consolas", size=14, weight="bold"),
             fg_color=COLORS["bg_card"],
@@ -1505,7 +1511,9 @@ class StegovertApp(ctk.CTk, TkinterDnD.DnDWrapper if HAS_DND else object):
                     
                     self._log_receiver(f"[~] Receiving: {filename} ({filesize} bytes)")
                     
-                    output_path = os.path.join(os.getcwd(), filename)
+                    received_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "received")
+                    os.makedirs(received_dir, exist_ok=True)
+                    output_path = os.path.join(received_dir, filename)
                     with open(output_path, "wb") as f:
                         bytes_received = 0
                         while bytes_received < filesize:

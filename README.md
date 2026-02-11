@@ -81,6 +81,48 @@ Aplikasi ini menggunakan library berikut:
 - `qrcode` - QR code generation
 - Dan lainnya (lihat `requirements.txt`)
 
+## 🌐 Setup Jaringan & Firewall
+
+Aplikasi ini menggunakan **port TCP 5001** untuk komunikasi. Pastikan port tersebut diizinkan di firewall.
+
+### Windows Firewall
+
+Buka **Command Prompt (Administrator)** dan jalankan:
+```bash
+netsh advfirewall firewall add rule name="STEGOVERT" dir=in action=allow protocol=TCP localport=5001
+```
+
+Atau secara manual:
+1. Buka **Windows Defender Firewall** → **Advanced Settings**
+2. Klik **Inbound Rules** → **New Rule**
+3. Pilih **Port** → **TCP** → masukkan `5001`
+4. Pilih **Allow the connection** → beri nama `STEGOVERT` → **Finish**
+
+### Linux (UFW)
+
+```bash
+sudo ufw allow 5001/tcp
+sudo ufw reload
+```
+
+### macOS
+
+```bash
+sudo pfctl -e
+echo "pass in proto tcp from any to any port 5001" | sudo pfctl -ef -
+```
+
+### ✅ Checklist Koneksi
+
+Sebelum menggunakan fitur kirim/terima, pastikan:
+- [ ] Kedua perangkat terhubung ke **jaringan WiFi/LAN yang sama**
+- [ ] **Receiver** menjalankan server terlebih dahulu (klik `START LISTENING`)
+- [ ] **Sender** memasukkan **IP Address** receiver yang benar (terlihat di header aplikasi)
+- [ ] Port `5001` **tidak diblokir** oleh firewall di kedua perangkat
+- [ ] Tidak ada VPN yang aktif (bisa mengganggu koneksi lokal)
+
+> 💡 **Tip:** Gunakan tombol `📡 PING` di aplikasi untuk menguji koneksi sebelum mengirim file.
+
 ## 🔧 Troubleshooting
 
 ### Error: "python is not recognized"
